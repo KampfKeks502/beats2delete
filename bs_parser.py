@@ -3,7 +3,7 @@
 import json
 import os.path
 import sys
-import custom_hash
+import bs_hash
 
 # song obj
 class Song:
@@ -97,7 +97,7 @@ def song_parser(song_folder):
     for diff in difficulties:
         file_list.append(song_folder + "/" + diff)
     try:
-        song_hash = custom_hash.hash_string(file_list, uppercase=True)
+        song_hash = bs_hash.hash_string(file_list, uppercase=True)
     except:
         print("Error creating hash of song")
         print("Song: " + song_folder)

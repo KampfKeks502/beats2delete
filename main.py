@@ -6,8 +6,8 @@ import sys
 import hashlib
 import argparse
 
-import custom_parser as cparser
-import custom_hash as chash
+import bs_parser as cparser
+import bs_hash
 
 
 
@@ -65,16 +65,16 @@ def sort_songs(beatsaber_path, compare_hash, delete):
 
 
 
-    print("Not in playlist:", len(not_in_playlist))
-    print("In playlist    :", len(in_playlist))
+    print("remove:", len(not_in_playlist), "maps")
+    print("Keep  :", len(in_playlist), "maps")
 
 
     if not delete:
         INput = input(str("Move " + str(len(not_in_playlist)) + " maps to temp folder? [y/n]\n"))
         if INput == "y" or  INput == "Y":
-            print("moving ...")
+            print("moving...")
         else:
-            print("abort ...")
+            print("abort...")
             sys.exit()
     else:
         INput = input(str("Delete " + str(len(not_in_playlist)) + " Songs? [y/n]     !!!This will be permanent and can't be undone!!!\n"))
