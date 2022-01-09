@@ -37,15 +37,18 @@ class Song:
         print("hash: " + self.hash)
         print("Path: " + self.song_path)
 
+    def __eq__(self, other):
+        return self.songName==other.songName and self.songAuthorName==other.songAuthorName
+
 
 class PlSong:
     songName = None
-    songAuthorName = None
+    levelAuthorName = None
     hash = None
 
-    def __init__(self, songName, songAuthorName, hash):
+    def __init__(self, songName, levelAuthorName, hash):
         self.songName = songName
-        self.songAuthorName = songAuthorName
+        self.levelAuthorName = levelAuthorName
         self.hash = hash
 
 
@@ -156,21 +159,29 @@ def playlists_parser(playlist_path):
 
 def parse_playlist_hash(playlist):
     data = json.loads(read_json(playlist))
-    hash_list = []
+    pl_list = []
     for songs in data["songs"]:
-        hash_list.append(songs["hash"])
-    return hash_list
+        pl_list.append(PlSong(songs["songName"],songs["levelAuthorName"], songs["hash"]))
+    return pl_list
 
 
-def get_song_hashes_from_playlists(path_to_playlist_folder):
+def get_songs_from_playlists(path_to_playlist_folder):
     playlists = playlists_parser(path_to_playlist_folder)
-    all_hashes = []
+    pl_list = []
+    # check if duplicates, if not add to list
     for playlist in playlists:
-        all_hashes += parse_playlist_hash(playlist)
+        pl_list_tmp = parse_playlist_hash(playlist)
+        for song in pl_list_tmp:
+            in_list = False
+            for elem in pl_list:
+                if elem.songName == song.songName and elem.levelAuthorName == song.levelAuthorName:
+                    in_list = True
+            if not in_list:
+                pl_list.append(song)
+
     # remove duplicates from list
-    all_hashes = list(dict.fromkeys(all_hashes))
-    print("Songs in Playlist: " , len(all_hashes))
-    return all_hashes
+    print("Songs in Playlist files (*.bplist): " , len(pl_list))
+    return pl_list
 
 
 
