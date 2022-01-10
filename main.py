@@ -175,5 +175,8 @@ def junk_remover(songs):
 
 
 if __name__ == "__main__":
+    if not args.favorite and not args.playlist:
+        print("Please provide at least one parse option [-pl and/or -f]")
+        sys.exit()
     # G:/Steam/steamapps/common/Beat Saber
     sort_songs(args.path, args.hash, args.delete, args.playlist, args.favorite)
