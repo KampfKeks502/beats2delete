@@ -1,5 +1,7 @@
 @echo off
-title Beats2Delete
+set ver=1.0
+title Beats2Delete v%ver% by KampfKeks502
+
 
 rem only change this variable =================   no backslashes!  ==============
 
