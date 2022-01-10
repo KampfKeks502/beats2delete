@@ -15,6 +15,7 @@ class Song:
     hash = None
 
     song_path = None
+    keep = False
 
     def __init__(self, songName, songAuthorName, levelAuthorName, difficulties, hash, song_path):
         self.songName = songName
@@ -40,6 +41,12 @@ class Song:
     def __eq__(self, other):
         return self.songName==other.songName and self.songAuthorName==other.songAuthorName
 
+    def rmv(self):
+        self.keep = False
+
+    def ks(self):
+        self.keep = True
+
 
 class PlSong:
     songName = None
@@ -62,7 +69,7 @@ def read_json(file):
         json = open(file, "r", encoding="utf-8").read()
         return json
     except:
-        print("Error reading Info.dat [" + file + "]")
+        print("Error reading [" + file + "]")
 
 
 def get_diff_files(dictionary):
@@ -182,6 +189,28 @@ def get_songs_from_playlists(path_to_playlist_folder):
     # remove duplicates from list
     print("Songs in Playlist files (*.bplist): " , len(pl_list))
     return pl_list
+
+
+def get_fav_hash(path):
+    data = json.loads(read_json(path))
+    # get only fav maps
+    fav_list = data["localPlayers"][0]["favoritesLevelIds"]
+    parsed = set()
+    #slice strings and remove junk
+    for map in fav_list:
+        sliced = map[13:]
+        if len(sliced) == 40 and not " " in sliced:
+            parsed.add(sliced)
+    print("Valid Favorites: " + str(len(parsed)) + "     Info: Does include songs that aren't installed any more")
+    return parsed
+
+
+def get_fav_maps(path):
+    print("favs: " + str(len(fav)))
+    map_hashes = get_fav_hash(fav)
+    for map in map_hashes:
+        print(map)
+
 
 
 
