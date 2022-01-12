@@ -11,8 +11,8 @@ from datetime import datetime
 import shutil
 
 # custom imports
-import bs_parser as cparser
-import bs_hash
+from src import bs_parser as cparser
+from src import bs_hash
 
 
 

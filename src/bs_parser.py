@@ -3,7 +3,9 @@
 import json
 import os.path
 import sys
-import bs_hash
+
+# custom import
+from src import bs_hash
 
 # song obj
 class Song:
