@@ -1,10 +1,15 @@
-# Beats2Delete
+# Beats2Delete (PCVR/Steam)
 
 This script will remove songs depending on your selection (Favorites/Playlist maps)
 
 At the end of the program you'll be asked if you want to delete all non-matching maps or
 just move them to a different folder (in case you want to recover the maps)
 
+Script tested using Python 3.8 (64-bit) - Win10
+
+# Demo Video
+### Remove all non-favorite maps in Beat Saber | Beats2Delete Demo
+[![Remove all non-favorite maps in Beat Saber](https://img.youtube.com/vi/zKhkO2SO7eU/maxresdefault.jpg)](https://youtu.be/zKhkO2SO7eU)
 
 # How does it work
 Upon starting the script you'll have to select a few things...
