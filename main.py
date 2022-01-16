@@ -9,6 +9,7 @@ import argparse
 from subprocess import call, run, STDOUT
 from datetime import datetime
 import shutil
+import math
 
 # custom imports
 from src import bs_parser as cparser
@@ -23,7 +24,7 @@ parser = argparse.ArgumentParser(description="Delete/Move all BeatSaber maps tha
 parser.add_argument("-H", "--hash", action="store_true", required=False, help="deletes all maps based on the song's hash")
 
 
-parser.add_argument("-p", "--path", required=True, type=str, metavar="", help="Path to BeatSaber: e.g.  -p \"G:/Steam/steamapps/common/Beat Saber\"  !!!Forward slashes ONLY!!!")
+parser.add_argument("-p", "--path", required=True, type=str, metavar="", help="Path to BeatSaber: e.g.  -p \"G:\\Steam\\steamapps\\common\\Beat Saber\"  !no environment variables!")
 
 parser.add_argument("-d", "--delete", action="store_true", required=False, help="delete maps")
 
@@ -37,6 +38,8 @@ args = parser.parse_args()
 
 def sort_songs(beatsaber_path, compare_hash, delete, keep_playlist, keep_favorites):
     beatsaber_path = beatsaber_path.replace("\\", "/")
+    if beatsaber_path[-1] == "/":
+        beatsaber_path = beatsaber_path[:-1]
     customLevels_path = beatsaber_path + "/Beat Saber_Data/CustomLevels"
     playlist_path = beatsaber_path + "/Playlists"
 
@@ -85,16 +88,18 @@ def sort_songs(beatsaber_path, compare_hash, delete, keep_playlist, keep_favorit
 
 
     #count rmv maps
+    rmv_size = 0
     i_keep = 0
     i_rmv = 0
     for song in songs:
         if not song.keep:
             i_rmv += 1
+            rmv_size += get_size(song.song_path)
         else:
             i_keep += 1
 
     print("")
-    print("remove:", i_rmv, "maps")
+    print("remove:", i_rmv, "maps    Size: " + convert_size(rmv_size))
     print("Keep  :", i_keep, "maps")
 
 
@@ -102,6 +107,7 @@ def sort_songs(beatsaber_path, compare_hash, delete, keep_playlist, keep_favorit
         INput = input(str("Move " + str(i_rmv) + " maps to temp folder? [y/n]\n"))
         if INput == "y" or  INput == "Y":
             junk_mover(beatsaber_path, songs)
+            print("Sorted out " + convert_size(rmv_size))
             print("\nDone")
         else:
             print("\nabort...")
@@ -110,6 +116,7 @@ def sort_songs(beatsaber_path, compare_hash, delete, keep_playlist, keep_favorit
         INput = input(str("Delete " + str(i_rmv) + " Songs? [Type in \"yes\" to confirm]     !!!This will be permanent and can't be undone!!!\n"))
         if INput == "yes" or  INput == "YES":
             junk_remover(songs)
+            print("Deleted " + convert_size(rmv_size))
             print("\nDone")
         else:
             print("\nabort ...")
@@ -170,7 +177,31 @@ def junk_remover(songs):
         if not song.keep:
             map_remover(song.song_path)
 
+# get dir size in bytes
+def get_size(start_path):
+    total_size = 0
+    try:
+        for dirpath, dirnames, filenames in os.walk(start_path):
+            for f in filenames:
+                fp = os.path.join(dirpath, f)
+                # skip if it is symbolic link
+                if not os.path.islink(fp):
+                    total_size += os.path.getsize(fp)
+    except Exception as err:
+        logging.info("Error trying to get dir size. Skipping " + start_path)
+        print(err)
 
+    return total_size
+
+
+def convert_size(size_bytes):
+   if size_bytes == 0:
+       return "0B"
+   size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+   i = int(math.floor(math.log(size_bytes, 1024)))
+   p = math.pow(1024, i)
+   s = round(size_bytes / p, 2)
+   return "%s %s" % (s, size_name[i])
 
 
 
