@@ -203,7 +203,7 @@ def get_fav_hash(path):
         sliced = map[13:]
         if len(sliced) == 40 and not " " in sliced:
             parsed.add(sliced)
-    print("Valid Favorites: " + str(len(parsed)) + "     Info: Does include songs that aren't installed any more")
+    print("Valid Favorites: " + str(len(parsed)) + "     Info: Count includes songs that are no longer installed")
     return parsed
 
 

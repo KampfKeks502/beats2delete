@@ -23,7 +23,7 @@ parser = argparse.ArgumentParser(description="Delete/Move all BeatSaber maps tha
 parser.add_argument("-H", "--hash", action="store_true", required=False, help="deletes all maps based on the song's hash")
 
 
-parser.add_argument("-p", "--path", required=True, type=str, metavar="", help="Path to BeatSaber: e.g.  -p \"G:/Steam/steamapps/common/Beat Saber\"  !!!Forward slashes ONLY!!!")
+parser.add_argument("-p", "--path", required=True, type=str, metavar="", help="Path to BeatSaber: e.g.  -p \"G:\\Steam\\steamapps\\common\\Beat Saber\"  !no environment variables!")
 
 parser.add_argument("-d", "--delete", action="store_true", required=False, help="delete maps")
 
@@ -37,6 +37,8 @@ args = parser.parse_args()
 
 def sort_songs(beatsaber_path, compare_hash, delete, keep_playlist, keep_favorites):
     beatsaber_path = beatsaber_path.replace("\\", "/")
+    if beatsaber_path[-1] == "/":
+        beatsaber_path = beatsaber_path[:-1]
     customLevels_path = beatsaber_path + "/Beat Saber_Data/CustomLevels"
     playlist_path = beatsaber_path + "/Playlists"
 
