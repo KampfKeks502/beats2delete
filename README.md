@@ -67,6 +67,7 @@ The only useable informations for map comparison inside the playlist files (*.bp
 - songName
 - levelAuthorName
 - hash
+
 I discovered an anomaly in the hashes stored in the playlist files. Some of them (rather small percentage)
 differ from the actual map hashes and therefore are not kept in Hash-ID-Compare mode.
 As a result it's recommended to use the first option until I figure out what's causing this discrepancy
