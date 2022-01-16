@@ -7,7 +7,7 @@ just move them to a different folder (in case you want to recover the maps)
 
 Script tested using Python 3.8 (64-bit) - Win10
 
-# Demo Video
+# Demo Video - YouTube
 ### Remove all non-favorite maps in Beat Saber | Beats2Delete Demo
 [![Remove all non-favorite maps in Beat Saber](https://img.youtube.com/vi/zKhkO2SO7eU/maxresdefault.jpg)](https://youtu.be/zKhkO2SO7eU)
 
