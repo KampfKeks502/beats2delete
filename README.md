@@ -1,4 +1,4 @@
-# Beats2Delete (PCVR/Steam)
+# Beats2Delete - Beat Saber (PCVR/Steam)
 
 This script will remove songs depending on your selection (Favorites/Playlist maps)
 
