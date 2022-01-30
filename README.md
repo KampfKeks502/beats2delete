@@ -76,7 +76,7 @@ and how to fix it.
 If you know more about this problem, feel free to contact me. I'd love to hear what's causing this behavior :)
 
 # How to use
-1. Adjust the path to your BeatSaber folder inside start.bat to your needs.\
+1. Adjust the path to your BeatSaber folder inside start.bat to your needs.
 2. run start.bat
 
 
